@@ -72,11 +72,11 @@ if __name__ == "__main__":
 
     torch.backends.cudnn.benchmark = True
 
-    model = RectifyNet().cuda()
+    model = RectifyNet() # .cuda()
     model.eval()
 
-    tgt_img = torch.randn(4, 3, 256, 832).cuda()
-    ref_imgs = [torch.randn(4, 3, 256, 832).cuda() for i in range(2)]
+    tgt_img = torch.randn(4, 3, 256, 832) # .cuda()
+    ref_imgs = [torch.randn(4, 3, 256, 832) for i in range(2)] # .cuda()
 
     pose = model(tgt_img, ref_imgs[0])
 

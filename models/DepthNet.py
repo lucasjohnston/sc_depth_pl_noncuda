@@ -139,12 +139,12 @@ if __name__ == "__main__":
 
     torch.backends.cudnn.benchmark = True
 
-    model = DepthNet().cuda()
+    model = DepthNet() # .cuda()
     model.train()
 
     B = 4
 
-    tgt_img = torch.randn(B, 3, 256, 832).cuda()
+    tgt_img = torch.randn(B, 3, 256, 832) # .cuda()
 
     tgt_depth = model(tgt_img)
 

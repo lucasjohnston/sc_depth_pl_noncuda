@@ -68,10 +68,10 @@ if __name__ == "__main__":
 
     torch.backends.cudnn.benchmark = True
 
-    model = PoseNet().cuda()
+    model = PoseNet() # .cuda()
     model.eval()
 
-    tgt_img = torch.randn(4, 3, 256, 832).cuda()
+    tgt_img = torch.randn(4, 3, 256, 832) # .cuda()
 
     pose = model(tgt_img, tgt_img)
 

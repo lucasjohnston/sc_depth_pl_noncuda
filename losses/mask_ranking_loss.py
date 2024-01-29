@@ -1,8 +1,7 @@
 import torch
 from torch import nn
 
-device = torch.device(
-    "cuda") if torch.cuda.is_available() else torch.device("cpu")
+device = torch.device("cpu") # torch.device("cuda") if torch.cuda.is_available() else 
 
 
 class Mask_Ranking_Loss(nn.Module):

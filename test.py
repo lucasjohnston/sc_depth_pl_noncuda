@@ -22,7 +22,7 @@ def main():
     system = system.load_from_checkpoint(hparams.ckpt_path, strict=False)
 
     model = system.depth_net
-    model.cuda()
+    # model.cuda()
     model.eval()
 
     # get training resolution
@@ -50,9 +50,9 @@ def main():
 
     all_errs = []
     for i, (tgt_img, gt_depth) in enumerate(tqdm(test_loader)):
-        pred_depth = model(tgt_img.cuda())
+        pred_depth = model(tgt_img) # .cuda()
 
-        errs = compute_errors(gt_depth.cuda(), pred_depth,
+        errs = compute_errors(gt_depth, pred_depth, # .cuda()
                               hparams.dataset_name)
 
         all_errs.append(np.array(errs))

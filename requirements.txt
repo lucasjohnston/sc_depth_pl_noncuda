@@ -1,3 +1,5 @@
+torchvision==0.14.1
+torchmetrics==0.11.4
 pytorch-lightning==1.7.3
 matplotlib
 opencv-python
@@ -10,5 +12,5 @@ kornia
 
 # conda create -n sc_depth_env python=3.8
 # conda activate sc_depth_env
-# conda install pytorch torchvision pytorch-cuda=11.7 -c pytorch -c nvidia
+# conda install pytorch=1.13.1 pillow fsspec urllib3
 # pip install -r requirements.txt
