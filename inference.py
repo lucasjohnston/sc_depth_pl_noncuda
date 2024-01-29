@@ -66,19 +66,22 @@ def main():
         filename = os.path.splitext(os.path.basename(img_file))[0]
 
         img = Image.open(img_file).convert('RGB')
+        original_size = img.size  # save original size
         img = np.array(img).astype(np.float32)
         tensor_img = inference_transform([img])[0][0].unsqueeze(0) #.cuda()
         pred_depth = model(tensor_img)
 
+        # resize depth map to original size
+        pred_depth = pred_depth.squeeze().cpu().numpy()
+        pred_depth_resized = cv2.resize(pred_depth, original_size, interpolation=cv2.INTER_LINEAR)
+
         if hparams.save_vis:
-            vis = visualize_depth(pred_depth[0, 0]).permute(
-                1, 2, 0).numpy() * 255
-            imwrite(output_dir/'vis/{}.jpg'.format(filename),
-                    vis.astype(np.uint8))
+            vis = visualize_depth(torch.from_numpy(pred_depth_resized), output_size=original_size)
+            vis = vis.permute(1, 2, 0).numpy() * 255
+            imwrite(output_dir/'vis/{}.jpg'.format(filename), vis.astype(np.uint8))
 
         if hparams.save_depth:
-            depth = pred_depth[0, 0].cpu().numpy()
-            np.save(output_dir/'depth/{}.npy'.format(filename), depth)
+            np.save(output_dir/'depth/{}.npy'.format(filename), pred_depth_resized)
 
 
 if __name__ == '__main__':
